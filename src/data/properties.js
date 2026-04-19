@@ -1,0 +1,80 @@
+export const properties = [
+  {
+    id: 1,
+    title: "Casa Moderna en Zona Residencial",
+    price: 450000,
+    location: "San Isidro, Lima",
+    type: "Casa",
+    bedrooms: 4,
+    bathrooms: 3,
+    area: 250,
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    description: "Hermosa casa moderna con acabados de lujo en zona residencial exclusiva.",
+    features: ["Piscina", "Jardín", "Garaje", "Seguridad 24h"]
+  },
+  {
+    id: 2,
+    title: "Apartamento de Lujo en Miraflores",
+    price: 320000,
+    location: "Miraflores, Lima",
+    type: "Apartamento",
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 120,
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
+    description: "Apartamento con vista al mar en el corazón de Miraflores.",
+    features: ["Vista al mar", "Gimnasio", "Terraza", "Concierge"]
+  },
+  {
+    id: 3,
+    title: "Villa Exclusiva en La Molina",
+    price: 850000,
+    location: "La Molina, Lima",
+    type: "Villa",
+    bedrooms: 5,
+    bathrooms: 4,
+    area: 420,
+    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80",
+    description: "Villa exclusiva con piscina y jardín privado en La Molina.",
+    features: ["Piscina privada", "Jardín grande", "Casa de huéspedes", "Sauna"]
+  },
+  {
+    id: 4,
+    title: "Penthouse en San Borja",
+    price: 680000,
+    location: "San Borja, Lima",
+    type: "Penthouse",
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 180,
+    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80",
+    description: "Penthouse con terraza privada y vista panorámica.",
+    features: ["Terraza", "Jacuzzi", "Vista panorámica", "2 estacionamientos"]
+  },
+  {
+    id: 5,
+    title: "Casa de Campo en Cieneguilla",
+    price: 380000,
+    location: "Cieneguilla, Lima",
+    type: "Casa de Campo",
+    bedrooms: 4,
+    bathrooms: 2,
+    area: 300,
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    description: "Casa de campo perfecta para fines de semana y reuniones familiares.",
+    features: ["Pool house", "Jardín extenso", "Parrilla", "Área de juegos"]
+  },
+  {
+    id: 6,
+    title: "Departamento Moderno en Barranco",
+    price: 280000,
+    location: "Barranco, Lima",
+    type: "Apartamento",
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 95,
+    image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80",
+    description: "Departamento en zona boemia de Barranco, cerca de la playa.",
+    features: ["Cerca playa", "Barrio artístico", "Terraza", "Biblioteca"]
+  }
+];
