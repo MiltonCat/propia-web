@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
+import { CONTACT_EMAIL } from "../config";
 
 const ZONA_DATA = {
   update: "20 Abril 2026",
@@ -525,7 +526,7 @@ Nota: Datos referenciales basados en listings de portales inmobiliarios.
 
         <div className="mt-3 sm:mt-4 text-center">
           <a 
-            href="mailto:ventascatalanprop@gmail.com?subject=Propuesta%20de%20inversión%20-%20San%20Martín%20de%20los%20Andes"
+            href={`mailto:${CONTACT_EMAIL}?subject=Propuesta%20de%20inversión%20-%20San%20Martín%20de%20los%20Andes`}
             className="inline-block w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-[#FF5A5F] text-white font-semibold rounded-lg sm:rounded-xl hover:bg-[#e54548] transition-colors text-sm text-center"
           >
             Solicitar propuesta

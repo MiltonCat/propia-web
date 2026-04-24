@@ -37,10 +37,17 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -57,11 +64,11 @@ export default function Navbar() {
       }`}
       style={{
         padding: scrolled ? '8px 0' : '20px 0',
-        transition: 'all 1000ms cubic-bezier(0.4, 0, 0.2, 1)',
+        transition: 'all 300ms cubic-bezier(0.4, 0, 0.2, 1)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center" style={{ minHeight: scrolled ? '40px' : '40px', transition: 'min-height 1000ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
+        <div className="flex justify-between items-center" style={{ minHeight: '40px', transition: 'min-height 300ms cubic-bezier(0.4, 0, 0.2, 1)' }}>
           <Link to="/" className="flex items-center relative">
             <img 
               src="/marca1.png" 

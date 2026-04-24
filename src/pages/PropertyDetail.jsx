@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { properties } from "../data/properties";
 import Lightbox from "../components/Lightbox";
 import { useFavorites } from "../hooks/useFavorites";
-
-const WA_NUMBER = "542944301470";
+import { usePageMeta } from "../hooks/usePageMeta";
+import { WA_NUMBER } from "../config";
 
 function waLink(propertyTitle, message = "") {
   const text = message || `Hola! Me interesa la propiedad: "${propertyTitle}". ¿Podemos hablar?`;
@@ -20,12 +20,16 @@ export default function PropertyDetail() {
   const [inquiry, setInquiry] = useState("");
   const { isFavorite, toggle } = useFavorites();
 
-  useEffect(() => {
-    if (property) {
-      document.title = `${property.title} | Catalán Propiedades`;
-    }
-    return () => { document.title = "Catalán Propiedades"; };
-  }, [property]);
+  usePageMeta(
+    property
+      ? {
+          title: `${property.title} | Catalán Propiedades`,
+          description: property.description?.slice(0, 155),
+          image: property.image,
+          url: window.location.href,
+        }
+      : {}
+  );
 
   if (!property) {
     return (

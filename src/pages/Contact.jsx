@@ -1,8 +1,9 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { WA_NUMBER, CONTACT_EMAIL } from "../config";
 
-const WHATSAPP_NUMBER = "542944301470";
-const EMAIL = "ventascatalanprop@gmail.com";
+const WHATSAPP_NUMBER = WA_NUMBER;
+const EMAIL = CONTACT_EMAIL;
 
 const INITIAL = { name: "", email: "", phone: "", message: "" };
 

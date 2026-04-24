@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { WA_URL } from "../config";
 
 const faqs = [
   {
@@ -82,7 +83,7 @@ export default function CentroAyuda() {
             <h3 className="font-semibold text-gray-800">Teléfono</h3>
             <p className="text-gray-500 text-sm">+54 9 2944 30-1470</p>
           </Link>
-          <a href="https://wa.me/542944301470" target="_blank" rel="noopener noreferrer" className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center group block">
+          <a href={WA_URL} target="_blank" rel="noopener noreferrer" className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition text-center group block">
             <div className="w-12 h-12 bg-[#FF5A5F]/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-[#FF5A5F]/20">
               <svg className="w-6 h-6 text-[#FF5A5F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />

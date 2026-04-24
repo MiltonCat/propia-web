@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { properties } from "../data/properties";
+import { WA_URL } from "../config";
 
-const WHATSAPP_URL = "https://wa.me/542944301470";
+const WHATSAPP_URL = WA_URL;
 
 function filterProps(filters) {
   return properties.filter((p) => {
