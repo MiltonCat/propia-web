@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import PropertyCard from "../components/PropertyCard";
 import PropertyCardSkeleton from "../components/PropertyCardSkeleton";
 import PropertyMap from "../components/PropertyMap";
@@ -12,6 +12,11 @@ export default function Properties() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("list");
   const [sortBy, setSortBy] = useState("default");
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
+  const location = useLocation();
+  const [modalidadTab, setModalidadTab] = useState(
+    location.pathname === "/alquileres" ? "alquiler_permanente" : (searchParams.get("modalidad") || "venta")
+  );
 
   const propertyTypes = ["Todos", ...new Set(properties.map((p) => p.type))];
 
@@ -23,6 +28,9 @@ export default function Properties() {
   }, [searchParams]);
 
   const filteredProperties = properties.filter((property) => {
+    // Filtro de modalidad principal
+    if (modalidadTab === "alquiler_permanente" && property.modalidad !== "alquiler_permanente") return false;
+    if (modalidadTab === "venta" && property.modalidad === "alquiler_permanente") return false;
     const searchParam = searchParams.get("search");
     const operation = searchParams.get("operation");
     
@@ -37,20 +45,18 @@ export default function Properties() {
     const priceMaxParam = searchParams.get("priceMax");
     const bedroomsParam = searchParams.get("bedrooms");
     const metersParam = searchParams.get("meters");
-    const documentsParam = searchParams.get("documents");
-    
+
     const priceMatch =
       priceRange === "Todos" ||
       (priceRange === "Menos de 300000" && property.price < 300000) ||
       (priceRange === "300000-500000" && property.price >= 300000 && property.price <= 500000) ||
       (priceRange === "Más de 500000" && property.price > 500000);
-    
+
     const minPriceMatch = !priceMinParam || property.price >= parseInt(priceMinParam);
     const maxPriceMatch = !priceMaxParam || property.price <= parseInt(priceMaxParam);
     const bedroomsMatch = !bedroomsParam || property.bedrooms >= parseInt(bedroomsParam);
     const metersMatch = !metersParam || property.area >= parseInt(metersParam);
-    const documentsMatch = !documentsParam || property.documentsReady === true;
-    
+
     const poolParam = searchParams.get("pool");
     const garageParam = searchParams.get("garage");
     const metersMinParam = searchParams.get("metersMin");
@@ -63,7 +69,7 @@ export default function Properties() {
       property.operation === "ambas" || 
       property.operation === operation;
 
-    return searchMatch && typeMatch && priceMatch && minPriceMatch && maxPriceMatch && bedroomsMatch && metersMatch && documentsMatch && operationMatch && poolMatch && garageMatch && metersMinMatch;
+    return searchMatch && typeMatch && priceMatch && minPriceMatch && maxPriceMatch && bedroomsMatch && metersMatch && operationMatch && poolMatch && garageMatch && metersMinMatch;
   }).sort((a, b) => {
     if (sortBy === "price-asc") return a.price - b.price;
     if (sortBy === "price-desc") return b.price - a.price;
@@ -76,8 +82,6 @@ export default function Properties() {
     setSearchParams({});
     setSearchQuery("");
   };
-  
-  const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
 
   const activeFiltersCount = [
     searchParams.get("search"),
@@ -86,12 +90,31 @@ export default function Properties() {
     searchParams.get("priceMax"),
     searchParams.get("bedrooms"),
     searchParams.get("meters"),
-    searchParams.get("documents"),
     searchParams.get("operation"),
   ].filter(Boolean).length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 pt-24">
+      {/* Tabs de modalidad */}
+      <div className="flex gap-2 mb-6 border-b border-gray-200">
+        {[
+          { key: "venta", label: "Comprar" },
+          { key: "alquiler_permanente", label: "Alquiler permanente" },
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => { setModalidadTab(tab.key); setFilter("Todos"); clearFilters(); }}
+            className={`px-5 py-2.5 text-sm font-semibold border-b-2 transition-colors -mb-px ${
+              modalidadTab === tab.key
+                ? "border-[#FF5A5F] text-[#FF5A5F]"
+                : "border-transparent text-gray-500 hover:text-gray-800"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold text-gray-800">
           Nuestras Propiedades

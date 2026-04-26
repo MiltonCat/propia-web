@@ -24,6 +24,7 @@ export default function Footer() {
             <h4 className="font-semibold text-gray-800 mb-4 font-jakarta">Explorar</h4>
             <div className="flex flex-col gap-3">
               <Link to="/propiedades" className="text-sm text-gray-500 hover:text-primary transition-colors font-dm">Propiedades</Link>
+              <Link to="/alquileres" className="text-sm text-gray-500 hover:text-primary transition-colors font-dm">Alquileres</Link>
               <Link to="/inversiones" className="text-sm text-gray-500 hover:text-primary transition-colors font-dm">Inversiones</Link>
               <Link to="/nosotros" className="text-sm text-gray-500 hover:text-primary transition-colors font-dm">Sobre mí</Link>
             </div>
@@ -56,7 +57,7 @@ export default function Footer() {
             <div className="flex items-center gap-6">
               <span className="text-sm text-gray-500 font-dm">🇦🇷 San Martín de los Andes, Argentina</span>
               <span className="text-sm text-gray-400 font-dm">|</span>
-              <span className="text-sm text-gray-500 font-dm">Español</span>
+              <span className="text-sm text-gray-500 font-dm">Argentina</span>
             </div>
           </div>
         </div>

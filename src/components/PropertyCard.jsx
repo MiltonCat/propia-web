@@ -1,13 +1,16 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../hooks/useFavorites";
 
-export default function PropertyCard({ property }) {
+function PropertyCard({ property }) {
   const { isFavorite, toggle } = useFavorites();
   const fav = isFavorite(property.id);
 
+  const isAlquiler = property.modalidad === "alquiler_permanente";
+
   const operationLabel = {
     venta: "Venta",
-    alquiler: "Alquiler",
+    alquiler: "Alquiler permanente",
     ambas: "Venta y Alquiler",
   };
 
@@ -45,21 +48,38 @@ export default function PropertyCard({ property }) {
         <p className="text-gray-500 text-sm mb-3">{property.location}</p>
 
         <div className="flex flex-col gap-2 mb-3">
-          {(property.operation === "venta" || property.operation === "ambas") && (
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-500">Venta</span>
-              <span className="text-xl font-bold text-green-600">
-                USD {property.price.toLocaleString()}
-              </span>
-            </div>
-          )}
-          {(property.operation === "alquiler" || property.operation === "ambas") && (
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-500">Alquiler</span>
-              <span className="text-xl font-bold text-purple-600">
-                ${property.rentPrice?.toLocaleString()}/mes
-              </span>
-            </div>
+          {isAlquiler ? (
+            <>
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-500">Alquiler mensual</span>
+                <span className="text-xl font-bold text-purple-600">
+                  $ {property.precioAlquilerARS?.toLocaleString("es-AR")}
+                </span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-500">Disponible</span>
+                <span className="text-xs font-medium text-green-600">{property.disponibleDesde}</span>
+              </div>
+            </>
+          ) : (
+            <>
+              {(property.operation === "venta" || property.operation === "ambas") && (
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500">Venta</span>
+                  <span className="text-xl font-bold text-green-600">
+                    USD {property.price.toLocaleString()}
+                  </span>
+                </div>
+              )}
+              {(property.operation === "alquiler" || property.operation === "ambas") && (
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500">Alquiler</span>
+                  <span className="text-xl font-bold text-purple-600">
+                    ${property.rentPrice?.toLocaleString()}/mes
+                  </span>
+                </div>
+              )}
+            </>
           )}
         </div>
 
@@ -67,9 +87,6 @@ export default function PropertyCard({ property }) {
           <span className="bg-gray-100 px-2 py-1 rounded">🛏️ {property.bedrooms} hab</span>
           <span className="bg-gray-100 px-2 py-1 rounded">🚿 {property.bathrooms} baños</span>
           <span className="bg-gray-100 px-2 py-1 rounded">📐 {property.area} m²</span>
-          {property.landArea && property.landArea !== property.area && (
-            <span className="bg-gray-100 px-2 py-1 rounded">🏞️ {property.landArea} m² terreno</span>
-          )}
         </div>
 
         {property.features?.length > 0 && (
@@ -83,3 +100,5 @@ export default function PropertyCard({ property }) {
     </div>
   );
 }
+
+export default memo(PropertyCard);

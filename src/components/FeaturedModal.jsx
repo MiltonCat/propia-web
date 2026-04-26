@@ -30,16 +30,16 @@ const FeaturedModal = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+      className={`fixed left-5 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-      onClick={(e) => e.target === e.currentTarget && handleClose()}
+      style={{
+        top: 'calc(80px + 55vh)',
+        transform: isVisible ? 'translateY(-100%)' : 'translateY(calc(-100% + 20px))',
+      }}
     >
       <div
-        className={`relative w-full max-w-sm overflow-hidden rounded-2xl bg-white shadow-2xl transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}
+        className="relative w-72 overflow-hidden rounded-2xl bg-white shadow-2xl"
       >
         <button
           onClick={handleClose}

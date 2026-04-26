@@ -45,9 +45,11 @@ export default function PropertyDetail() {
   const allImages = [property.image, property.image1, property.image2, property.image3, property.image4].filter(Boolean);
   const fav = isFavorite(property.id);
 
+  const isAlquiler = property.modalidad === "alquiler_permanente";
+
   const operationLabel = {
     venta: "Venta",
-    alquiler: "Alquiler",
+    alquiler: "Alquiler permanente",
     ambas: "Venta y Alquiler",
   };
 
@@ -152,13 +154,47 @@ export default function PropertyDetail() {
 
       <div className="grid md:grid-cols-2 gap-6 mb-6">
         <div className="flex items-center justify-between border rounded-xl p-4">
-          <div className="flex flex-col">
-            <span className="text-2xl font-bold text-gray-900">USD {property.price?.toLocaleString()}</span>
-            <span className="text-gray-500 text-sm">precio de venta</span>
-          </div>
-          <a href={waLink(property.title)} target="_blank" rel="noopener noreferrer" className="bg-[#FF5A5F] hover:bg-[#FF385C] text-white font-semibold py-3 px-6 rounded-lg transition shrink-0">
-            Me interesa
-          </a>
+          {isAlquiler ? (
+            <div className="flex flex-col gap-1 w-full">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-500 text-sm">Alquiler mensual</span>
+                <span className="text-2xl font-bold text-purple-600">
+                  $ {property.precioAlquilerARS?.toLocaleString("es-AR")}
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-1">
+                <span className="text-gray-500 text-sm">Disponible desde</span>
+                <span className="text-sm font-semibold text-green-600">{property.disponibleDesde}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-500 text-sm">Mínimo</span>
+                <span className="text-sm text-gray-700">{property.mesesMinimos} meses</span>
+              </div>
+              {property.condiciones && (
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500 text-sm">Condiciones</span>
+                  <span className="text-sm text-gray-700">{property.condiciones}</span>
+                </div>
+              )}
+              <a
+                href={waLink(property.title, `Hola! Me interesa alquilar la propiedad: "${property.title}". ¿Podemos hablar?`)}
+                target="_blank" rel="noopener noreferrer"
+                className="mt-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 px-5 rounded-lg transition text-center"
+              >
+                Consultar disponibilidad
+              </a>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between w-full">
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-gray-900">USD {property.price?.toLocaleString()}</span>
+                <span className="text-gray-500 text-sm">precio de venta</span>
+              </div>
+              <a href={waLink(property.title)} target="_blank" rel="noopener noreferrer" className="bg-[#FF5A5F] hover:bg-[#FF385C] text-white font-semibold py-3 px-6 rounded-lg transition shrink-0">
+                Me interesa
+              </a>
+            </div>
+          )}
         </div>
         <div className="border rounded-xl p-4">
           <h3 className="font-semibold text-gray-800 mb-2">Sobre esta propiedad</h3>
@@ -239,15 +275,18 @@ export default function PropertyDetail() {
       </div>
 
       <div className="flex flex-col gap-3">
-        {(property.operation === "venta" || property.operation === "ambas") && (
-          <a href={waLink(property.title, `Hola! Me interesa comprar la propiedad: "${property.title}". ¿Está disponible?`)} target="_blank" rel="noopener noreferrer" className="w-full bg-[#FF5A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#FF385C] transition text-center block">
-            Me interesa comprar
+        {isAlquiler ? (
+          <a href={waLink(property.title, `Hola! Me interesa alquilar permanentemente la propiedad: "${property.title}". ¿Está disponible?`)} target="_blank" rel="noopener noreferrer" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold transition text-center block">
+            Consultar disponibilidad
           </a>
-        )}
-        {(property.operation === "alquiler" || property.operation === "ambas") && (
-          <a href={waLink(property.title, `Hola! Me interesa alquilar la propiedad: "${property.title}". ¿Está disponible?`)} target="_blank" rel="noopener noreferrer" className="w-full bg-[#FF5A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#FF385C] transition text-center block">
-            Me interesa alquilar
-          </a>
+        ) : (
+          <>
+            {(property.operation === "venta" || property.operation === "ambas") && (
+              <a href={waLink(property.title, `Hola! Me interesa comprar la propiedad: "${property.title}". ¿Está disponible?`)} target="_blank" rel="noopener noreferrer" className="w-full bg-[#FF5A5F] text-white py-3 rounded-lg font-semibold hover:bg-[#FF385C] transition text-center block">
+                Me interesa comprar
+              </a>
+            )}
+          </>
         )}
       </div>
 

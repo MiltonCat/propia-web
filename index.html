@@ -2,12 +2,53 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/iso1.png" id="favicon" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catalan Propiedades - Venta y Alquiler de Propiedades</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      (function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = 64;
+        canvas.height = 64;
+        const ctx = canvas.getContext("2d");
+        const img = new Image();
+        img.src = "/iso1.png";
+        img.onload = function () {
+          let angle = 0;
+          let scale = 1;
+          let growing = true;
+          let frame = 0;
+
+          function draw() {
+            ctx.clearRect(0, 0, 64, 64);
+            ctx.save();
+            ctx.translate(32, 32);
+
+            // Pulso suave de escala
+            if (growing) { scale += 0.004; if (scale >= 1.12) growing = false; }
+            else          { scale -= 0.004; if (scale <= 0.92) growing = true;  }
+
+            // Rotación lenta cada ~120 frames (pausa entre giros)
+            frame++;
+            if (frame > 120) angle += 0.06;
+            if (angle >= Math.PI * 2) { angle = 0; frame = 0; }
+
+            ctx.rotate(angle);
+            ctx.scale(scale, scale);
+            ctx.drawImage(img, -40, -40, 80, 80);
+            ctx.restore();
+
+            const favicon = document.getElementById("favicon");
+            if (favicon) favicon.href = canvas.toDataURL("image/png");
+            requestAnimationFrame(draw);
+          }
+          draw();
+        };
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
